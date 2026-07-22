@@ -1,7 +1,10 @@
-chat.html
-dm.html
-styles.css
-script.js
-const socket = io("https://your-backend-url", {
+chat.html <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="script.js"></script> dm.html <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="script.js"></script>styles.css
+script.js const socket = io("https://your-backend-url", {
   auth: { token: localStorage.getItem("token") }
+const socket = io("https://your-real-backend-url.onrender.com", {
+  auth: {
+    token: localStorage.getItem("token")
+  }
 });
