@@ -2,7 +2,7 @@ chat.html <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script src="script.js"></script> dm.html <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script src="script.js"></script>styles.css
 script.js 
-const socket = io("https://your-real-backend-url.onrender.com", {
+const socket = io("https://chat-app-4uol.onrender.com") {
   auth: {
     token: localStorage.getItem("token")
   }
