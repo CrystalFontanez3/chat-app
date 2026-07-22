@@ -49,3 +49,9 @@ module.exports = router;
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/rooms", roomRoutes);
+const express = require("express");
+const router = express.Router();
+
+// your login/register routes here
+
+module.exports = router;
