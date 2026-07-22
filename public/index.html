@@ -25,3 +25,21 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<head><title>Chat</title></head>
+<body>
+  <h2>Chat Rooms</h2>
+  <button onclick="joinRoom('general')">General</button>
+  <button onclick="joinRoom('gaming')">Gaming</button>
+  <button onclick="joinRoom('music')">Music</button>
+
+  <ul id="messages"></ul>
+
+  <input id="input" placeholder="Message">
+  <button onclick="sendMessage()">Send</button>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
