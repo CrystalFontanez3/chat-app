@@ -1,10 +1,12 @@
-User.js require ("express") models/Usermodels/Roommodels/Messagemodule.exports = mongoose.model("User", UserSchema);const express = require("express");
-const User = require("../models/User");
-const authMiddleware = require("../middleware/auth");
-
+/User.js
+/Room.js
+/Message.js
+/auth.js
+/rooms.js
+/users.js
+/db.js
+User.js require ("express") models/Usermodels/Roommodels/Message
 const router = express.Router();
-const mongoose = require (mongoose)
-const UserSchema = new mongoose.Schema ({...})
 router.get("/me", authMiddleware, async (req, res) => {
   const user = await User.findById(req.userId).select("-password");
   res.json(user);
