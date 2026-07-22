@@ -115,3 +115,32 @@ io.on("connection", (socket) => {
 });
 
 http.listen(3000, () => console.log("Server running"));
+const token = localStorage.getItem("token");
+const socket = io({ auth: { token } });
+
+let currentRoom = null;
+
+socket.on("history", (messages) => {
+  const list = document.getElementById("messages");
+  list.innerHTML = "";
+  messages.forEach(addMessage);
+});
+
+socket.on("message", addMessage);
+
+function addMessage(msg) {
+  const li = document.createElement("li");
+  li.textContent = `${msg.username}: ${msg.text}`;
+  document.getElementById("messages").appendChild(li);
+}
+
+function joinRoom(room) {
+  currentRoom = room;
+  socket.emit("joinRoom", room);
+}
+
+function sendMessage() {
+  const text = document.getElementById("input").value;
+  socket.emit("chatMessage", { room: currentRoom, text });
+  document.getElementById("input").value = "";
+}
