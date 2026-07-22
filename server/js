@@ -1,44 +1,6 @@
 const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
-const io = require("socket.io")(http);
-
-app.use(express.static("public"));
-
-io.on("connection", (socket) => {
-    console.log("A user connected");
-
-    socket.on("chat message", (msg) => {
-        io.emit("chat message", msg);
-    });
-
-    socket.on("disconnect", () => {
-        console.log("A user disconnected");
-    });
-});
-
-http.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
-});
-{
-  "name": "chat-app",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "socket.io": "^4.7.2",
-    "mongoose": "^7.0.0",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.0",
-    "cors": "^2.8.5"
-  }
-}
-const express = require("express");
-const app = express();
-const http = require("http").createServer(app);
 const io = require("socket.io")(http, { cors: { origin: "*" } });
 const connectDB = require("./config/db");
 const Message = require("./models/Message");
