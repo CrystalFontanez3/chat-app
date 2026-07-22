@@ -5,8 +5,6 @@ Message.js
 /rooms.js
 /users.js
 /db.js
-Room.js
-Message.js
 const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
