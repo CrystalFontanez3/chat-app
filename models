@@ -1,5 +1,5 @@
 User.js
-const express = require("express");
+module.exports = mongoose.model("User", UserSchema);const express = require("express");
 const User = require("../models/User");
 const authMiddleware = require("../middleware/auth");
 
@@ -28,3 +28,4 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).json({ message: "Invalid token" });
   }
 };
+module.exports = mongoose.model("User", UserSchema);
