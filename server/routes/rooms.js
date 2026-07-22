@@ -41,3 +41,31 @@ router.get("/:id/messages", authMiddleware, async (req, res) => {
 });
 
 module.exports = router;
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const Room = require("../models/Room");
+const Message = require("../models/Message");
+
+const router = express.Router();
+
+const authMiddleware = (req, res, next) => {
+  const header = req.headers.authorization;
+  if (!header) return res.status(401).json({ message: "No token provided" });
+
+  const token = header.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = decoded.id;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+};
+
+router.get("/", authMiddleware, async (req, res) => {
+  const rooms = await Room.find();
+  res.json(rooms);
+});
+
+module.exports = router;
