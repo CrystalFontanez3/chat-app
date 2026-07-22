@@ -36,3 +36,87 @@ http.listen(3000, () => {
     "cors": "^2.8.5"
   }
 }
+const express = require("express");
+const app = express();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http, { cors: { origin: "*" } });
+const connectDB = require("./config/db");
+const Message = require("./models/Message");
+const User = require("./models/User");
+const Room = require("./models/Room");
+const authRoutes = require("./routes/auth");
+const roomRoutes = require("./routes/rooms");
+const userRoutes = require("./routes/users");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+connectDB();
+
+app.use(express.json());
+app.use(express.static("public"));
+app.use("/auth", authRoutes);
+app.use("/rooms", roomRoutes);
+app.use("/users", userRoutes);
+
+// Authenticate socket
+io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    socket.user = user;
+    next();
+  } catch {
+    next(new Error("Authentication error"));
+  }
+});
+
+io.on("connection", async (socket) => {
+  console.log("User connected:", socket.user.username);
+
+  await User.findByIdAndUpdate(socket.user.id, { online: true });
+
+  // Join room
+  socket.on("joinRoom", async (room) => {
+    socket.join(room);
+
+    const history = await Message.find({ room }).sort({ timestamp: 1 });
+    socket.emit("history", history);
+  });
+
+  // Room message
+  socket.on("chatMessage", async ({ room, text }) => {
+    const msg = new Message({
+      room,
+      sender: socket.user.username,
+      text
+    });
+
+    await msg.save();
+    io.to(room).emit("message", msg);
+  });
+
+  // Private DM
+  socket.on("dm", async ({ to, text }) => {
+    const msg = new Message({
+      sender: socket.user.username,
+      receiver: to,
+      text
+    });
+
+    await msg.save();
+
+    io.emit("dm", msg);
+  });
+
+  // Typing indicator
+  socket.on("typing", (room) => {
+    socket.to(room).emit("typing", socket.user.username);
+  });
+
+  socket.on("disconnect", async () => {
+    await User.findByIdAndUpdate(socket.user.id, { online: false });
+    console.log("User disconnected:", socket.user.username);
+  });
+});
+
+http.listen(3000, () => console.log("Server running"));
