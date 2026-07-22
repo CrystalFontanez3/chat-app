@@ -26,9 +26,9 @@ router.get("/:roomId/messages", auth, async (req, res) => {
 
   res.json(messages);
 });
-
+server.js
+db.js
 module.exports = router; mongoose = require("mongoose");
-
 const RoomSchema = new mongoose.Schema({
   name: { type: String, required: true }
 });
@@ -93,8 +93,17 @@ router.get("/me", auth, async (req, res) => {
 });
 
 module.exports = router;/
-db.js
-const jwt = require("jsonwebtoken");
+db.js const mongoose = require("mongoose");
+
+module.exports = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
+  }
+};const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
   const header = req.headers.authorization;
