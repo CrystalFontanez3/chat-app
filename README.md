@@ -17,3 +17,6 @@ chat-app/
     ├── index.html
     ├── chat.html
     └── script.js
+git add .
+git commit -m "Add backend and package.json"
+git push
