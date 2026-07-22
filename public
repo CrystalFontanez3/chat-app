@@ -2,3 +2,6 @@ chat.html
 dm.html
 styles.css
 script.js
+const socket = io("https://your-backend-url", {
+  auth: { token: localStorage.getItem("token") }
+});
