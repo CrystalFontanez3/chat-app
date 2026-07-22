@@ -3,7 +3,7 @@ const User = require("../models/User");
 const authMiddleware = require("../middleware/auth");
 
 const router = express.Router();
-
+const mongoose = require (mongoose)
 router.get("/me", authMiddleware, async (req, res) => {
   const user = await User.findById(req.userId).select("-password");
   res.json(user);
