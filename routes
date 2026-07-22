@@ -1,6 +1,6 @@
-routes/users.jsauth.js 
-routes/auth.js
-routes/rooms.js
+/routes/users.jsauth.js 
+/routes/auth.js
+/routes/rooms.js
 middleware/auth.js
 register+login
 const express = require("express");
