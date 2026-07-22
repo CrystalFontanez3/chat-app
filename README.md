@@ -12,3 +12,10 @@ chat-app/
 │   ├── rooms.js
 │   └── users.js
 └── .env  (not committed)
+README.md
+.gitignore
+package.json
+public/
+server/
+node/
+CNAME
