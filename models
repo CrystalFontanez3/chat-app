@@ -5,14 +5,7 @@
 /rooms.js
 /users.js
 /db.js
-User.js require ("express") models/Usermodels/Roommodels/Message
-const router = express.Router();
-router.get("/me", authMiddleware, async (req, res) => {
-  const user = await User.findById(req.userId).select("-password");
-  res.json(user);
-});
-
-module.exports = router;Room.js
+Room.js
 Message.js
 const jwt = require("jsonwebtoken");
 
