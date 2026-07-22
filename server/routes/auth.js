@@ -46,3 +46,6 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/rooms", roomRoutes);
