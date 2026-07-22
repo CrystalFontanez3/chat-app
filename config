@@ -1,1 +1,2 @@
 config/db.js
+module.exports = connectDB;
