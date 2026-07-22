@@ -1,4 +1,4 @@
-User.js models/Usermodels/Roommodels/Messagemodule.exports = mongoose.model("User", UserSchema);const express = require("express");
+User.js require ("express") models/Usermodels/Roommodels/Messagemodule.exports = mongoose.model("User", UserSchema);const express = require("express");
 const User = require("../models/User");
 const authMiddleware = require("../middleware/auth");
 
