@@ -82,3 +82,4 @@ socket.on("dm", (msg) => {
   li.textContent = `${msg.sender} → ${msg.receiver}: ${msg.text}`;
   document.getElementById("dmMessages").appendChild(li);
 });
+io()
