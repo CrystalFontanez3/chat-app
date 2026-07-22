@@ -1,11 +1,3 @@
-/User.js
-/Room.js
-/Message.js
-/auth.js
-/rooms.js
-/users.js
-/db.js
-server.js
 /routes/users.jsauth.js 
 /routes/auth.js
 /routes/rooms.js
