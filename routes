@@ -1,4 +1,4 @@
-auth.js register+login
+routes/users.jsauth.js register+login
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -91,3 +91,4 @@ module.exports = router;
 routes/auth.js
 routes/users.js
 routes/rooms.js
+routes/users.js
