@@ -62,3 +62,56 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
+const express = require("express");
+const app = express();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http, { cors: { origin: "*" } });
+const connectDB = require("./config/db");
+const Message = require("./models/Message");
+const authRoutes = require("./routes/auth");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+connectDB();
+
+app.use(express.json());
+app.use(express.static("public"));
+app.use("/auth", authRoutes);
+
+// Middleware to verify JWT
+io.use((socket, next) => {
+  const token = socket.handshake.auth.token;
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    socket.user = user;
+    next();
+  } catch {
+    next(new Error("Authentication error"));
+  }
+});
+
+// Socket events
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.user.username);
+
+  socket.on("joinRoom", async (room) => {
+    socket.join(room);
+
+    const history = await Message.find({ room }).sort({ timestamp: 1 });
+    socket.emit("history", history);
+  });
+
+  socket.on("chatMessage", async ({ room, text }) => {
+    const msg = new Message({
+      room,
+      username: socket.user.username,
+      text
+    });
+
+    await msg.save();
+
+    io.to(room).emit("message", msg);
+  });
+});
+
+http.listen(3000, () => console.log("Server running"));
